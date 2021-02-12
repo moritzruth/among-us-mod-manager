@@ -1,47 +1,37 @@
-import pathLib from "path"
-import { app, BrowserWindow, shell } from "electron"
+import { app, dialog, Menu } from "electron"
 import { registerWindowIPC } from "./registerWindowIPC"
+import { MANAGER_VERSION } from "./version"
+import { initiateManager, isAmongUsInstalled } from "./manager"
+import { createWindow, getWindow } from "./window"
 
-const isDevelopment = process.env.IS_DEV!
 if (!app.requestSingleInstanceLock()) app.quit()
 
-let window: BrowserWindow | null = null
-
 app.on("ready", async () => {
-  window = new BrowserWindow({
-    show: false,
-    frame: false,
-    backgroundColor: "#171717",
-    height: 700,
-    width: 450,
-    resizable: false,
-    webPreferences: {
-      contextIsolation: false,
-      nodeIntegration: true
-    }
-  })
+  if (!await isAmongUsInstalled()) {
+    dialog.showErrorBox(
+      "Among Us could not be found",
+      "Please make sure Among Us is installed in the default location of Steam Games."
+    )
 
-  window.webContents.on("will-navigate", (event, rawUrl) => {
-    console.log(rawUrl)
-    event.preventDefault()
-    shell.openExternal(rawUrl)
-  })
-
-  if (isDevelopment) {
-    await window.loadURL("http://localhost:3000")
-    window.setSize(1000, 700)
-    window.webContents.openDevTools({ mode: "right" })
-  } else {
-    await window.loadFile(pathLib.resolve(__dirname, "./renderer/index.html"))
+    app.exit(1)
   }
 
+  app.applicationMenu = Menu.buildFromTemplate([
+    { label: `Version: ${MANAGER_VERSION}`, enabled: false },
+    { type: "separator" },
+    { role: "quit" }
+  ])
+
+  initiateManager()
   registerWindowIPC()
 
-  window.show()
+  await createWindow()
 })
 
 app.on("second-instance", () => {
   // Someone tried to run a second instance, we should focus our window.
+  const window = getWindow()
+
   if (window !== null) {
     if (window.isMinimized()) window.restore()
     window.focus()

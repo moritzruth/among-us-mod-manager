@@ -3,13 +3,13 @@
     closable
     :title="`Settings: ${mod?.title}`"
     :model-value="active"
-    @close="onClose()"
+    @close="close()"
   >
     <template #default>
-      <KInput required label="Custom Server Address"/>
+      <KInput label="Custom Server Address" v-model="data.customServerAddress"/>
     </template>
     <template #buttons>
-      <KButton loading>
+      <KButton :loading="loading" @click="save()">
         Save
       </KButton>
     </template>
@@ -21,11 +21,12 @@
 </style>
 
 <script>
-  import { ref, watchEffect, computed } from "vue"
+  import { ref, watchEffect, computed, reactive } from "vue"
   import { useMainStore } from "../pinia"
   import ModalDialog from "./ModalDialog.vue"
   import KInput from "./KInput.vue"
   import KButton from "./KButton.vue"
+  import { ipcRenderer } from "../utils/ipcRenderer.ts"
 
   export default {
     name: "ModSettingsDialog",
@@ -33,16 +34,37 @@
     setup() {
       const store = useMainStore()
       const mod = ref(null)
+      const loading = ref(false)
+
+      const data = reactive({
+        customServerAddress: ""
+      })
 
       watchEffect(() => {
-        if (store.settingsDialogModId !== null) mod.value = store.mods[store.settingsDialogModId]
+        if (store.settingsDialogModId !== null) {
+          mod.value = store.mods.find(m => m.id === store.settingsDialogModId)
+          data.customServerAddress = mod.value.customServerAddress ?? ""
+        }
       })
 
       return {
+        loading,
+        data,
         active: computed(() => store.settingsDialogModId !== null),
         mod,
-        onClose() {
+        close() {
           store.settingsDialogModId = null
+        },
+        async save() {
+          loading.value = true
+          await ipcRenderer.invoke(
+            "manager:set-custom-server-address",
+            mod.value.id,
+            data.customServerAddress === "" ? null : data.customServerAddress
+          )
+
+          this.close()
+          loading.value = false
         }
       }
     }

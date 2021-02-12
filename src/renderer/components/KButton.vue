@@ -89,12 +89,8 @@
         type: null,
         default: null
       },
-      disabled: {
-        type: Boolean
-      },
-      loading: {
-        type: Boolean
-      }
+      disabled: Boolean,
+      loading: Boolean
     },
     emits: ["ripple", "click"],
     computed: {

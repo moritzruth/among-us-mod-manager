@@ -1,6 +1,7 @@
 const path = require("path")
 const { default: NodeResolve } = require("@esbuild-plugins/node-resolve")
 const { build } = require("esbuild")
+const { version } = require("./package.json")
 
 const isDev = process.argv.includes("--dev")
 if (isDev) console.log("Watching...")
@@ -13,7 +14,8 @@ build({
   platform: "node",
   outfile: path.resolve(__dirname, "./dist/main.js"),
   define: {
-    "process.env.IS_DEV": String(isDev)
+    "process.env.IS_DEV": String(isDev),
+    "__MANAGER_VERSION": `"${version}"`
   },
   plugins: [
     NodeResolve({

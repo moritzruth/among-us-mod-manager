@@ -1,8 +1,8 @@
 <template>
   <div class="app__title-bar w-full h-16 bg-gray-800 text-gray-100 flex items-center relative z-10">
-    <div class="title-bar__draggable flex justify-center items-center w-16 h-16 flex-grow-0">
-      <img class="h-12" src="/icon.png" alt="The app icon">
-    </div>
+    <button class="flex justify-center items-center w-16 h-16 flex-grow-0 cursor-default" @click="showMenu()">
+      <img class="h-9" src="/icon.png" alt="The app icon">
+    </button>
     <div class="flex-grow title-bar__draggable px-1">
       <span class="text-3xl font-display font-bold">Among Us Mod Manager</span>
     </div>
@@ -47,6 +47,9 @@
       },
       close() {
         window.close()
+      },
+      showMenu() {
+        ipcRenderer.send("window:menu")
       }
     }
   }

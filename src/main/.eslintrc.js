@@ -11,6 +11,12 @@ module.exports = {
     "project": path.resolve(__dirname, "../../tsconfig.json")
   },
   rules: {
-    "@typescript-eslint/no-misused-promises": "off"
+    "@typescript-eslint/no-misused-promises": "off",
+    "unicorn/prevent-abbreviations": ["warn", {
+      "replacements": {
+        "mod": false,
+        "props": false
+      }
+    }]
   }
 }
