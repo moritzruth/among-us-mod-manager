@@ -1,0 +1,40 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  ::-webkit-scrollbar-button {
+    height: 0;
+    width: 0;
+  }
+
+  ::-webkit-scrollbar-track {
+
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-gray-600 h-14;
+  }
+
+  html, body {
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+  }
+
+  body {
+    @apply text-gray-100 select-none bg-gray-900;
+  }
+
+  button {
+    @apply focus:outline-none;
+  }
+
+  ::selection {
+    background: rgba(255, 255, 255, 0.2);
+  }
+}
