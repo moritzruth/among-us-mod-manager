@@ -14,7 +14,7 @@ build({
   platform: "node",
   outfile: path.resolve(__dirname, "./dist/main.js"),
   define: {
-    "process.env.IS_DEV": String(isDev),
+    "process.env.IS_DEV": `"${isDev}"`,
     "__MANAGER_VERSION": `"${version}"`
   },
   plugins: [

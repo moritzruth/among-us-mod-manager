@@ -40,7 +40,6 @@ export async function createWindow() {
   state.manage(window)
 
   window.webContents.on("will-navigate", (event, rawUrl) => {
-    console.log(rawUrl)
     event.preventDefault()
     shell.openExternal(rawUrl)
   })

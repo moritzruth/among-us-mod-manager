@@ -36,7 +36,7 @@
           <div>
             <slot/>
           </div>
-          <div v-if="$slots.buttons" class="mt-2 flex justify-end">
+          <div v-if="$slots.buttons" class="mt-5 flex justify-end">
             <slot name="buttons"/>
           </div>
         </div>

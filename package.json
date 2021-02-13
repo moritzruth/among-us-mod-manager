@@ -8,15 +8,15 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "start": "run-electron .",
+    "start": "electron-forge start",
     "dev": "nodemon --watch ./dist/main.js --exec run-electron ./dist/main.js",
     "watch:m": "node build-main.js --dev",
     "watch:r": "vite",
-    "build:m": "node build-main.js",
-    "build:r": "vite build",
     "rebuild": "electron-rebuild",
     "lint": "eslint src --fix",
-    "vue-devtools": "vue-devtools"
+    "vue-devtools": "vue-devtools",
+    "build": "node build-main.js && vite build",
+    "make": "yarn build && electron-forge make"
   },
   "browserslist": [
     "electron 11.2.3"
@@ -25,15 +25,20 @@
     "node": "12.20.2"
   },
   "devDependencies": {
+    "@electron-forge/cli": "^6.0.0-beta.54",
+    "@electron-forge/maker-squirrel": "^6.0.0-beta.54",
+    "@electron-forge/maker-zip": "^6.0.0-beta.54",
     "@esbuild-plugins/node-resolve": "^0.0.14",
     "@types/decompress": "^4.2.3",
     "@types/download": "^6.2.4",
     "@types/electron-devtools-installer": "^2.2.0",
     "@types/fs-extra": "^9.0.7",
+    "@types/semver": "^7.3.4",
     "@vitejs/plugin-vue": "^1.1.4",
     "@vue/compiler-sfc": "^3.0.5",
     "@vue/devtools": "^6.0.0-beta.6",
     "autoprefixer": "^10.2.4",
+    "electron": "^11.2.3",
     "esbuild": "^0.8.44",
     "eslint": "^7.19.0",
     "eslint-config-awzzm-ts": "^1.5.0",
@@ -51,7 +56,7 @@
     "@zhuowenli/vue-feather-icons": "^5.0.2",
     "decompress": "^4.2.1",
     "download": "^8.0.0",
-    "electron": "^11.2.3",
+    "electron-squirrel-startup": "^1.0.0",
     "electron-store": "^7.0.2",
     "electron-window-state": "^5.0.3",
     "execa": "^5.0.0",
@@ -61,5 +66,30 @@
     "semver": "^7.3.4",
     "vue": "^3.0.5",
     "vue-prim": "^0.2.1"
+  },
+  "config": {
+    "forge": {
+      "packagerConfig": {
+        "name": "Among Us Mod Manager",
+        "icon": "./resources/icon.ico"
+      },
+      "makers": [
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": [
+            "win32"
+          ]
+        },
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "config": {
+            "setupExe": "Among Us Mod Manager - Installer.exe",
+            "setupIcon": "./resources/icon.ico",
+            "loadingGif": "./resources/installing.gif",
+            "iconUrl": "https://raw.githubusercontent.com/moritzruth/among-us-mod-manager/main/resources/icon.ico"
+          }
+        }
+      ]
+    }
   }
 }

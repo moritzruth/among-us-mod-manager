@@ -5,9 +5,12 @@ import { app, dialog, ipcMain } from "electron"
 import download from "download"
 import decompress from "decompress"
 import execa from "execa"
+import semver from "semver"
 import { getWindow } from "./window"
+import { MANAGER_VERSION } from "./version"
 
 const STEAM_APPS_DIRECTORY = "C:\\Program Files (x86)\\Steam\\steamapps\\common"
+const ORIGINAL_GAME_DIRECTORY = pathLib.resolve(STEAM_APPS_DIRECTORY, "Among Us")
 
 interface RemoteModData {
   id: string
@@ -16,12 +19,14 @@ interface RemoteModData {
   projectURL: string
   downloadURL: string
   version: string
+  minManagerVersion: string
 }
 
 interface InstalledModData {
   id: string
   version: string
   path: string
+  amongUsVersion: string
 }
 
 interface UIModData {
@@ -29,17 +34,35 @@ interface UIModData {
   title: string
   author: string
   projectURL: string
-  newestVersion: string
   installedVersion: string | null
+  outdated: boolean
 }
 
 let activeModId: string | null = null
+let originalGameVersion: string
 
 export const installedMods: InstalledModData[] = []
 export const remoteMods: RemoteModData[] = []
 
 export function isModActive() {
   return activeModId !== null
+}
+
+async function detectAmongUsVersion(directory: string): Promise<string> {
+  const content = await fs.readFile(
+    pathLib.resolve(directory, "./Among Us_Data/globalgamemanagers"),
+    { encoding: "utf8" }
+  )
+
+  const regex = /\d{4}\.\d{1,4}\.\d{1,4}/gu
+  regex.exec(content)
+  const match = regex.exec(content)
+
+  if (match !== null) {
+    return match[0]
+  }
+
+  throw new Error("Among Us version could not be detected")
 }
 
 export async function discoverInstalledMods() {
@@ -49,9 +72,14 @@ export async function discoverInstalledMods() {
     const directory = pathLib.resolve(STEAM_APPS_DIRECTORY, name)
     const dataPath = pathLib.resolve(directory, "aumm.json")
 
-    return (await fs.pathExists(dataPath)
-      ? { path: directory, ...await fs.readJson(dataPath) }
-      : null) as (InstalledModData | null)
+    if (await fs.pathExists(dataPath)) {
+      const data = await fs.readJson(dataPath) as Omit<InstalledModData, "path" | "amongUsVersion">
+      const amongUsVersion = await detectAmongUsVersion(directory)
+
+      return { path: directory, amongUsVersion, ...data } as InstalledModData
+    }
+
+    return null
   }))).filter(mod => mod !== null) as InstalledModData[]
 
   installedMods.push(...mods)
@@ -80,8 +108,10 @@ export function getUIModData(): UIModData[] {
       title: remoteMod.title,
       author: remoteMod.author,
       installedVersion: installedMod?.version ?? null,
-      newestVersion: remoteMod.version,
-      projectURL: remoteMod.projectURL
+      projectURL: remoteMod.projectURL,
+      outdated: installedMod === undefined
+        ? false
+        : installedMod.version !== remoteMod.version || installedMod.amongUsVersion !== originalGameVersion
     }
   })
 }
@@ -112,18 +142,17 @@ function updateProgress(state: Partial<ProgressState>) {
   getWindow().webContents.send("manager:progress", currentProgressState)
 }
 
-async function installMod(id: string) {
-  const alreadyInstalledIndex = installedMods.findIndex(mod => mod.id === id)
+async function installMod(remoteMod: RemoteModData) {
+  const alreadyInstalledIndex = installedMods.findIndex(mod => mod.id === remoteMod.id)
   if (alreadyInstalledIndex !== -1) installedMods.splice(alreadyInstalledIndex, 1)
 
-  const remoteMod = remoteMods.find(mod => mod.id === id)!
   const directory = pathLib.resolve(STEAM_APPS_DIRECTORY, `Among Us (${remoteMod.title})`)
 
   updateProgress({ title: "Install: " + remoteMod.title, text: "Preparing...", finished: false })
   if (await fs.pathExists(directory)) await fs.remove(directory)
 
   updateProgress({ text: "Copying game files..." })
-  await fs.copy(pathLib.resolve(STEAM_APPS_DIRECTORY, "Among Us"), directory)
+  await fs.copy(ORIGINAL_GAME_DIRECTORY, directory)
 
   const request = download(remoteMod.downloadURL, directory, { filename: "__archive" })
 
@@ -144,7 +173,8 @@ async function installMod(id: string) {
   const installedMod: InstalledModData = {
     id: remoteMod.id,
     version: remoteMod.version,
-    path: directory
+    path: directory,
+    amongUsVersion: originalGameVersion
   }
 
   updateProgress({ text: "Saving metadata..." })
@@ -175,12 +205,27 @@ async function startModdedGame(id: string) {
   })
 }
 
+async function tryInstallMod(id: string): Promise<boolean> {
+  const remoteMod = remoteMods.find(mod => mod.id === id)!
+
+  if (semver.lt(MANAGER_VERSION, remoteMod.minManagerVersion)) return false
+
+  await installMod(remoteMod)
+  return true
+}
+
 export function initiateManager() {
   ipcMain.handle("manager:get-mods", () => getUIModData())
-  ipcMain.handle("manager:install", async (event, id) => installMod(id))
+  ipcMain.handle("manager:install", async (event, id) => tryInstallMod(id))
   ipcMain.handle("manager:start", async (event, id) => startModdedGame(id))
 
-  Promise.all([discoverInstalledMods(), fetchRemoteMods()]).then(() => {
+  Promise.all([
+    discoverInstalledMods(),
+    fetchRemoteMods(),
+    (async () => {
+      originalGameVersion = await detectAmongUsVersion(ORIGINAL_GAME_DIRECTORY)
+    })()
+  ]).then(() => {
     sendUIModData()
   })
 }

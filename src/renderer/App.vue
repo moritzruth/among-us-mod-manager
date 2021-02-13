@@ -7,6 +7,7 @@
     </main>
     <ModSettingsDialog/>
     <ProgressModal/>
+    <UpdateRequiredDialog/>
     <LoadingOverlay :text="loadingText"/>
   </div>
 </template>
@@ -24,10 +25,11 @@
   import { ipcRenderer } from "./utils/ipcRenderer.ts"
   import { useMainStore } from "./pinia"
   import ProgressModal from "./components/ProgressModal.vue"
+  import UpdateRequiredDialog from "./components/UpdateRequiredDialog.vue"
 
   export default {
     name: "App",
-    components: { ProgressModal, LoadingOverlay, ModSettingsDialog, ModsList, TitleBar },
+    components: { UpdateRequiredDialog, ProgressModal, LoadingOverlay, ModSettingsDialog, ModsList, TitleBar },
     setup() {
       const loadingText = ref(null)
       const store = useMainStore()

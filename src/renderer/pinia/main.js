@@ -5,6 +5,7 @@ export const useMainStore = defineStore({
   state: () => ({
     settingsDialogModId: null,
     mods: [],
-    activeModId: null
+    activeModId: null,
+    showUpdateRequired: false
   })
 })

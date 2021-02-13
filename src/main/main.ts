@@ -3,35 +3,48 @@ import { registerWindowIPC } from "./registerWindowIPC"
 import { MANAGER_VERSION } from "./version"
 import { initiateManager, isAmongUsInstalled } from "./manager"
 import { createWindow, getWindow } from "./window"
+import { handleSquirrelEvents } from "./handleSquirrelEvents"
 
-if (!app.requestSingleInstanceLock()) app.quit()
-
-app.on("ready", async () => {
-  if (!await isAmongUsInstalled()) {
-    dialog.showErrorBox(
-      "Among Us could not be found",
-      "Please make sure Among Us is installed in the default location of Steam games."
-    )
-
-    app.exit(1)
+if (!handleSquirrelEvents()) {
+  if (!app.requestSingleInstanceLock()) {
+    console.log("Another instance is already running. Quitting...")
+    app.quit()
   }
 
-  app.applicationMenu = Menu.buildFromTemplate([
-    { label: `Version: ${MANAGER_VERSION}`, enabled: false },
-    { type: "separator" },
-    { role: "quit" }
-  ])
+  app.on("ready", async () => {
+    if (!await isAmongUsInstalled()) {
+      dialog.showErrorBox(
+        "Among Us could not be found",
+        "Please make sure Among Us is installed in the default location of Steam games."
+      )
 
-  initiateManager()
-  registerWindowIPC()
+      app.exit(1)
+    }
 
-  await createWindow()
-})
+    app.applicationMenu = Menu.buildFromTemplate([
+      { label: `Version: ${MANAGER_VERSION}`, enabled: false },
+      {
+        label: "Show devtools",
+        click() {
+          getWindow().webContents.openDevTools({ mode: "detach" })
+        },
+        accelerator: "Ctrl+Shift+I"
+      },
+      { type: "separator" },
+      { role: "quit" }
+    ])
 
-app.on("second-instance", () => {
-  const window = getWindow()
+    initiateManager()
+    registerWindowIPC()
 
-  window.show()
-  if (window.isMinimized()) window.restore()
-  window.focus()
-})
+    await createWindow()
+  })
+
+  app.on("second-instance", () => {
+    const window = getWindow()
+
+    window.show()
+    if (window.isMinimized()) window.restore()
+    window.focus()
+  })
+}

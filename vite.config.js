@@ -46,7 +46,8 @@ const externals = [
 /**
  * @type {import('vite').UserConfig}
  */
-export default {
+export default ({ command }) => ({
+  base: command === "build" ? "./" : "/",
   root: pathLib.resolve(__dirname, "./src/renderer"),
   publicDir: pathLib.resolve(__dirname, "./src/static"),
   plugins: [vue()],
@@ -61,4 +62,4 @@ export default {
     },
     emptyOutDir: true
   }
-}
+})
