@@ -1,7 +1,7 @@
 import pathLib from "path"
 import got from "got"
 import fs from "fs-extra"
-import { ipcMain } from "electron"
+import { app, dialog, ipcMain } from "electron"
 import download from "download"
 import decompress from "decompress"
 import execa from "execa"
@@ -21,7 +21,6 @@ interface RemoteModData {
 interface InstalledModData {
   id: string
   version: string
-  customServerAddress: string | null
   path: string
 }
 
@@ -32,11 +31,16 @@ interface UIModData {
   projectURL: string
   newestVersion: string
   installedVersion: string | null
-  customServerAddress: string | null
 }
+
+let activeModId: string | null = null
 
 export const installedMods: InstalledModData[] = []
 export const remoteMods: RemoteModData[] = []
+
+export function isModActive() {
+  return activeModId !== null
+}
 
 export async function discoverInstalledMods() {
   if (installedMods.length > 0) return
@@ -54,7 +58,13 @@ export async function discoverInstalledMods() {
 }
 
 export async function fetchRemoteMods(): Promise<void> {
-  remoteMods.push(...(await got("http://m0.is/amongus-mods", { responseType: "json" })).body as RemoteModData[])
+  try {
+    remoteMods.push(...(await got("http://m0.is/amongus-mods", { responseType: "json" })).body as RemoteModData[])
+  } catch {
+    dialog.showErrorBox("Mods could not be loaded.", "Please check your internet connection.")
+    app.exit(1)
+    throw new Error("Mods could not be fetched.")
+  }
 }
 
 export async function isAmongUsInstalled(): Promise<boolean> {
@@ -69,7 +79,6 @@ export function getUIModData(): UIModData[] {
       id: remoteMod.id,
       title: remoteMod.title,
       author: remoteMod.author,
-      customServerAddress: installedMod?.customServerAddress ?? null,
       installedVersion: installedMod?.version ?? null,
       newestVersion: remoteMod.version,
       projectURL: remoteMod.projectURL
@@ -77,84 +86,92 @@ export function getUIModData(): UIModData[] {
   })
 }
 
+async function saveInstalledModData(mod: InstalledModData) {
+  const { path, ...data } = mod
+  await fs.writeJson(pathLib.resolve(path, "aumm.json"), data)
+}
+
 function sendUIModData() {
-  getWindow()?.webContents.send("manager:mods-updated", getUIModData())
+  getWindow().webContents.send("manager:mods-updated", getUIModData())
+}
+
+interface ProgressState {
+  title: string
+  text: string
+  finished: boolean
+}
+
+let currentProgressState: ProgressState = {
+  title: "",
+  text: "",
+  finished: true
+}
+
+function updateProgress(state: Partial<ProgressState>) {
+  currentProgressState = { ...currentProgressState, ...state }
+  getWindow().webContents.send("manager:progress", currentProgressState)
 }
 
 async function installMod(id: string) {
   const alreadyInstalledIndex = installedMods.findIndex(mod => mod.id === id)
-  if (alreadyInstalledIndex !== -1) {
-    installedMods.splice(alreadyInstalledIndex, 1)
-  }
+  if (alreadyInstalledIndex !== -1) installedMods.splice(alreadyInstalledIndex, 1)
 
   const remoteMod = remoteMods.find(mod => mod.id === id)!
   const directory = pathLib.resolve(STEAM_APPS_DIRECTORY, `Among Us (${remoteMod.title})`)
 
-  getWindow()?.webContents.send("manager:progress", {
-    title: "Install: " + remoteMod.title,
-    text: "Preparing...",
-    finished: false
-  })
-
+  updateProgress({ title: "Install: " + remoteMod.title, text: "Preparing...", finished: false })
   if (await fs.pathExists(directory)) await fs.remove(directory)
 
-  getWindow()?.webContents.send("manager:progress", {
-    title: "Install: " + remoteMod.title,
-    text: "Copying game files...",
-    finished: false
-  })
-
+  updateProgress({ text: "Copying game files..." })
   await fs.copy(pathLib.resolve(STEAM_APPS_DIRECTORY, "Among Us"), directory)
 
   const request = download(remoteMod.downloadURL, directory, { filename: "__archive" })
 
   request.on("downloadProgress", ({ percent }) => {
-    getWindow()?.webContents.send("manager:progress", {
-      title: "Install: " + remoteMod.title,
-      text: `Downloading... (${Math.trunc(percent * 100)}%)`
-    })
+    updateProgress({ text: `Downloading... (${Math.trunc(percent * 100)}%)` })
   })
 
   await request
 
-  getWindow()?.webContents.send("manager:progress", {
-    title: "Install: " + remoteMod.title,
-    text: "Extracting..."
-  })
+  updateProgress({ text: "Extracting..." })
 
   const archivePath = pathLib.resolve(directory, "__archive")
   await decompress(archivePath, directory)
+
+  updateProgress({ text: "Cleaning up..." })
   await fs.remove(archivePath)
 
-  getWindow()?.webContents.send("manager:progress", {
-    title: "Install: " + remoteMod.title,
-    text: "Extracting...",
-    finished: true
-  })
-
-  const installedMod = {
+  const installedMod: InstalledModData = {
     id: remoteMod.id,
     version: remoteMod.version,
-    customServerAddress: null
+    path: directory
   }
 
-  await fs.writeJson(pathLib.resolve(directory, "aumm.json"), installedMod)
-  installedMods.push({ path: directory, ...installedMod })
+  updateProgress({ text: "Saving metadata..." })
+  await saveInstalledModData(installedMod)
+  installedMods.push(installedMod)
   sendUIModData()
+
+  updateProgress({ finished: true })
 }
 
-function startModdedGame(id: string) {
+async function startModdedGame(id: string) {
   const installedMod = installedMods.find(mod => mod.id === id)!
 
   const process = execa(
     pathLib.resolve(installedMod.path, "Among Us.exe"),
-    { detached: true, stdout: "ignore", stderr: "inherit", windowsHide: false }
+    { detached: false, stdout: "ignore", stderr: "inherit", windowsHide: false }
   )
 
-  getWindow()?.webContents.send("manager:game-started", installedMod.id)
+  activeModId = installedMod.id
+  getWindow().webContents.send("manager:game-started", installedMod.id)
 
-  process.on("exit", () => {
-    getWindow()?.webContents.send("manager:game-stopped")
+  process.on("exit", async () => {
+    activeModId = null
+
+    const window = getWindow()
+    window.webContents.send("manager:game-stopped")
+    if (!window.isVisible()) app.exit()
   })
 }
 

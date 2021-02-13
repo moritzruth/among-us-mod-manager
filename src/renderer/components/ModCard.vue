@@ -68,7 +68,7 @@
 <script>
   import { PlayIcon, DownloadIcon, RefreshCwIcon, SettingsIcon } from "@zhuowenli/vue-feather-icons"
   import semver from "semver"
-  import { computed, toRef, ref } from "vue"
+  import { computed, toRef } from "vue"
   import { useMainStore } from "../pinia"
   import { ipcRenderer } from "../utils/ipcRenderer.ts"
 
@@ -85,7 +85,7 @@
       const store = useMainStore()
       const status = computed(() => {
         if (props.mod.installedVersion === null) return "not-installed"
-        if (semver.lt(props.mod.installedVersion, props.mod.newestVersion)) return "outdated"
+        if (props.mod.installedVersion !== props.mod.newestVersion) return "outdated"
         return "up-to-date"
       })
 

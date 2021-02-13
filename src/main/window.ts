@@ -1,21 +1,25 @@
 import pathLib from "path"
-import { BrowserWindow, nativeImage as NativeImage, shell } from "electron"
+import { app, BrowserWindow, nativeImage as NativeImage, shell } from "electron"
 import windowStateKeeper from "electron-window-state"
 import { isDevelopment } from "./isDevelopment"
+import { createTray, destroyTray } from "./tray"
+import { isModActive } from "./manager"
 
-let window: BrowserWindow | null = null
+let window: BrowserWindow
 
 export function getWindow() {
   return window
 }
 
 export async function createWindow() {
-  if (window !== null) throw new Error("Window already exists")
-
   const state = windowStateKeeper({
     maximize: false,
     fullScreen: false
   })
+
+  const icon = NativeImage.createFromPath(pathLib.resolve(__dirname, isDevelopment
+    ? "../src/static"
+    : "./renderer", "icon.png"))
 
   window = new BrowserWindow({
     x: state.x,
@@ -30,9 +34,7 @@ export async function createWindow() {
       contextIsolation: false,
       nodeIntegration: true
     },
-    icon: NativeImage.createFromPath(pathLib.resolve(__dirname, isDevelopment
-      ? "../src/static"
-      : "./renderer", "icon.png"))
+    icon
   })
 
   state.manage(window)
@@ -41,6 +43,16 @@ export async function createWindow() {
     console.log(rawUrl)
     event.preventDefault()
     shell.openExternal(rawUrl)
+  })
+
+  window.on("hide", () => createTray(icon))
+  window.on("show", () => destroyTray())
+
+  window.on("close", event => {
+    if (isModActive()) {
+      event.preventDefault()
+      window.hide()
+    } else app.exit()
   })
 
   if (isDevelopment) {

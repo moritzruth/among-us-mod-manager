@@ -4,6 +4,7 @@
   "items": {
     "type": "object",
     "required": ["id", "title", "author", "downloadURL", "projectURL", "version", "minManagerVersion"],
+    "additionalProperties": false,
     "properties": {
       "id": {
         "type": "string"

@@ -10,7 +10,7 @@ app.on("ready", async () => {
   if (!await isAmongUsInstalled()) {
     dialog.showErrorBox(
       "Among Us could not be found",
-      "Please make sure Among Us is installed in the default location of Steam Games."
+      "Please make sure Among Us is installed in the default location of Steam games."
     )
 
     app.exit(1)
@@ -29,17 +29,9 @@ app.on("ready", async () => {
 })
 
 app.on("second-instance", () => {
-  // Someone tried to run a second instance, we should focus our window.
   const window = getWindow()
 
-  if (window !== null) {
-    if (window.isMinimized()) window.restore()
-    window.focus()
-  }
-})
-
-app.on("window-all-closed", () => {
-  if (process.platform !== "darwin") {
-    app.quit()
-  }
+  window.show()
+  if (window.isMinimized()) window.restore()
+  window.focus()
 })
