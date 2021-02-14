@@ -11,7 +11,7 @@ You may encounter the following warning:
 
 > Windows protected your PC: Windows Defender SmartScreen prevented an unrecognized app from starting.
 
-You can safely ignore it by clicking "More information" and "Run anyways".
+You can safely ignore it by clicking "More info" and "Run anyway".
 Removing this warning requires buying an expensive Code Signing license which I don’t have.
 
 **Do not update the program while Among Us is running!**
