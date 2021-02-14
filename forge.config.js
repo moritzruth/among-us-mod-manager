@@ -1,3 +1,5 @@
+const { version } = require("./package.json")
+
 module.exports = {
   packagerConfig: {
     name: "Among Us Mod Manager",
@@ -20,14 +22,12 @@ module.exports = {
   makers: [
     {
       name: "@electron-forge/maker-zip",
-      platforms: [
-        "win32"
-      ]
+      platforms: ["win32"]
     },
     {
       name: "@electron-forge/maker-squirrel",
       config: {
-        setupExe: "Among Us Mod Manager - Installer.exe",
+        setupExe: `AmongUsModManagerInstaller-${version}.exe`,
         setupIcon: "./resources/icon.ico",
         loadingGif: "./resources/installing.gif",
         iconUrl: "https://raw.githubusercontent.com/moritzruth/among-us-mod-manager/main/resources/icon.ico"
