@@ -8,6 +8,7 @@ import execa from "execa"
 import semver from "semver"
 import { getWindow } from "./window"
 import { MANAGER_VERSION } from "./version"
+import { isDevelopment } from "./isDevelopment"
 
 const STEAM_APPS_DIRECTORY = "C:\\Program Files (x86)\\Steam\\steamapps\\common"
 const ORIGINAL_GAME_DIRECTORY = pathLib.resolve(STEAM_APPS_DIRECTORY, "Among Us")
@@ -190,7 +191,7 @@ async function startModdedGame(id: string) {
 
   const process = execa(
     pathLib.resolve(installedMod.path, "Among Us.exe"),
-    { detached: false, stdout: "ignore", stderr: "inherit", windowsHide: false }
+    { detached: false, stdout: "ignore", stderr: isDevelopment ? "inherit" : "ignore", windowsHide: false }
   )
 
   activeModId = installedMod.id
