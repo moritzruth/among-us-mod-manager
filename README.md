@@ -7,8 +7,12 @@
 Download [the latest installer](https://github.com/moritzruth/among-us-mod-manager/releases/download/v1.0.0/AmongUsModManagerInstaller-1.0.0.exe)
 and execute it. It’s as simple as that.
 
-Security warnings by Windows Defender or your Antivirus software can be ignored. Removing them requires buying an
-expensive Code Signing license which I don’t have.
+You may encounter the following warning:
+
+> Windows protected your PC: Windows Defender SmartScreen prevented an unrecognized app from starting.
+
+You can safely ignore it by clicking "More information" and "Run anyways".
+Removing this warning requires buying an expensive Code Signing license which I don’t have.
 
 **Do not update the program while Among Us is running!**
 
