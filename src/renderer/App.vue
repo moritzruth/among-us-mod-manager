@@ -40,7 +40,7 @@
         loadingText.value = null
       }
 
-      ipcRenderer.once("manager:mods-updated", (event, mods) => setMods(mods))
+      ipcRenderer.on("manager:mods-updated", (event, mods) => setMods(mods))
 
       ipcRenderer.on("manager:game-started", (event, id) => {
         store.activeModId = id

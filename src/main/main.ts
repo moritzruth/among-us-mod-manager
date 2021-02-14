@@ -29,9 +29,7 @@ if (!handleSquirrelEvents()) {
           getWindow().webContents.openDevTools({ mode: "detach" })
         },
         accelerator: "Ctrl+Shift+I"
-      },
-      { type: "separator" },
-      { role: "quit" }
+      }
     ])
 
     initiateManager()

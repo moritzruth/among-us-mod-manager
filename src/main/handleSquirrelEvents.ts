@@ -1,6 +1,6 @@
 import childProcess from "child_process"
 import pathLib from "path"
-import { app } from "electron"
+import { app, dialog } from "electron"
 import { isDevelopment } from "./isDevelopment"
 
 const spawn = (command: string, arguments_: string[]) => {
@@ -25,7 +25,7 @@ export function handleSquirrelEvents(): boolean {
 
   const spawnUpdate = (...arguments_: string[]) => spawn(updateDotExe, arguments_)
 
-  const [squirrelEvent] = process.argv
+  const [,squirrelEvent] = process.argv
 
   switch (squirrelEvent) {
     case "--squirrel-install":

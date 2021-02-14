@@ -68,28 +68,6 @@
     "vue-prim": "^0.2.1"
   },
   "config": {
-    "forge": {
-      "packagerConfig": {
-        "name": "Among Us Mod Manager",
-        "icon": "./resources/icon.ico"
-      },
-      "makers": [
-        {
-          "name": "@electron-forge/maker-zip",
-          "platforms": [
-            "win32"
-          ]
-        },
-        {
-          "name": "@electron-forge/maker-squirrel",
-          "config": {
-            "setupExe": "Among Us Mod Manager - Installer.exe",
-            "setupIcon": "./resources/icon.ico",
-            "loadingGif": "./resources/installing.gif",
-            "iconUrl": "https://raw.githubusercontent.com/moritzruth/among-us-mod-manager/main/resources/icon.ico"
-          }
-        }
-      ]
-    }
+    "forge": "./forge.config.js"
   }
 }
