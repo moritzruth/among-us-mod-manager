@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-gray-800 ring-offset-gray-700 p-4 flex">
+  <div class="bg-gray-800 ring-offset-gray-700 p-4 flex relative">
     <div class="flex-grow flex flex-col">
       <div>
         <span class="text-3xl">{{ mod.title }}</span>&nbsp;
@@ -9,10 +9,10 @@
       </div>
       <span class="block text-1xl">by {{ mod.author }}</span>
       <div class="uppercase font-bold text-blue-400 text-base mt-auto">
-        <a class="focus:outline-none focus-visible:underline" :href="mod.projectURL">Website</a>
+        <a class="focus:outline-none focus-visible:underline text-sm" :href="mod.projectURL">Website</a>
       </div>
     </div>
-    <div class="flex flex-col justify-center items-center space-y-3">
+    <div class="flex flex-col justify-center items-center space-y-3 pt-2">
       <div class="flex justify-center items-center">
         <button
           class="text-2xl rounded-full p-5 transform-gpu bg-opacity-40 ring-offset-gray-700
@@ -28,18 +28,18 @@
           </transition>
         </button>
       </div>
-      <button
-        v-if="showSettingsButton"
-        class="flex justify-center items-center space-x-1 text-sm py-1 px-2
-               transition duration-200"
-        :disabled="settingsDisabled"
-        :class="settingsDisabled ? 'opacity-50 cursor-not-allowed' : 'hocus:bg-gray-600'"
-        @click="showSettings()"
-      >
-        <SettingsIcon size="1x"/>
-        <span>Settings</span>
-      </button>
     </div>
+    <button
+      v-if="status !== 'not-installed'"
+      class="flex justify-center items-center space-x-1 text-sm p-1
+               transition duration-200 top-1 right-1 absolute"
+      title="Uninstall"
+      :disabled="activeModId === mod.id"
+      :class="activeModId === mod.id ? 'opacity-50 cursor-not-allowed' : 'hocus:bg-gray-600'"
+      @click="uninstall()"
+    >
+      <XIcon/>
+    </button>
   </div>
 </template>
 
@@ -66,14 +66,14 @@
 </style>
 
 <script>
-  import { PlayIcon, DownloadIcon, RefreshCwIcon, SettingsIcon } from "@zhuowenli/vue-feather-icons"
+  import { PlayIcon, DownloadIcon, RefreshCwIcon, XIcon } from "@zhuowenli/vue-feather-icons"
   import { computed, toRef } from "vue"
   import { useMainStore } from "../pinia"
   import { ipcRenderer } from "../utils/ipcRenderer.ts"
 
   export default {
     name: "ModCard",
-    components: { PlayIcon, DownloadIcon, RefreshCwIcon, SettingsIcon },
+    components: { PlayIcon, DownloadIcon, RefreshCwIcon, XIcon },
     props: {
       mod: {
         type: Object,
@@ -90,10 +90,9 @@
 
       return {
         status,
-        showSettingsButton: false, // Not needed yet
         activeModId: toRef(store, "activeModId"),
-        showSettings() {
-          store.settingsDialogModId = props.mod.id
+        uninstall() {
+          ipcRenderer.invoke("manager:uninstall", props.mod.id)
         },
         async onActionClick() {
           switch (status.value) {

@@ -1,9 +1,9 @@
-import { app, dialog, Menu } from "electron"
+import { app, Menu, shell } from "electron"
 import { registerWindowIPC } from "./registerWindowIPC"
-import { MANAGER_VERSION } from "./version"
-import { initiateManager, isAmongUsInstalled } from "./manager"
 import { createWindow, getWindow } from "./window"
 import { handleSquirrelEvents } from "./handleSquirrelEvents"
+import { getOriginalGameVersion, initiateManager, loadGameVersionOrShowError, STEAM_APPS_DIRECTORY } from "./manager"
+import { MANAGER_VERSION } from "./constants"
 
 if (!handleSquirrelEvents()) {
   if (!app.requestSingleInstanceLock()) {
@@ -12,17 +12,18 @@ if (!handleSquirrelEvents()) {
   }
 
   app.on("ready", async () => {
-    if (!await isAmongUsInstalled()) {
-      dialog.showErrorBox(
-        "Among Us could not be found",
-        "Please make sure Among Us is installed in the default location of Steam games."
-      )
-
-      app.exit(1)
-    }
+    await loadGameVersionOrShowError()
 
     app.applicationMenu = Menu.buildFromTemplate([
-      { label: `Version: ${MANAGER_VERSION}`, enabled: false },
+      { label: `Manager: ${MANAGER_VERSION}`, enabled: false },
+      { label: `Among Us: ${getOriginalGameVersion()}`, enabled: false },
+      { type: "separator" },
+      {
+        label: "Open Steam games directory",
+        click() {
+          shell.openPath(STEAM_APPS_DIRECTORY)
+        }
+      },
       {
         label: "Show devtools",
         click() {

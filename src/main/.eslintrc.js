@@ -17,6 +17,8 @@ module.exports = {
         "mod": false,
         "props": false
       }
-    }]
+    }],
+    "@typescript-eslint/no-unsafe-call": "off", // many false positives
+    "@typescript-eslint/strict-boolean-expressions": "off" // many false positives
   }
 }

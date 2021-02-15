@@ -1,9 +1,9 @@
 import pathLib from "path"
 import { app, BrowserWindow, nativeImage as NativeImage, shell } from "electron"
 import windowStateKeeper from "electron-window-state"
-import { isDevelopment } from "./isDevelopment"
 import { createTray, destroyTray } from "./tray"
-import { isModActive } from "./manager"
+import { isGameRunning } from "./manager"
+import { isDevelopment } from "./constants"
 
 let window: BrowserWindow
 
@@ -48,7 +48,7 @@ export async function createWindow() {
   window.on("show", () => destroyTray())
 
   window.on("close", event => {
-    if (isModActive()) {
+    if (isGameRunning()) {
       event.preventDefault()
       window.hide()
     } else app.exit()

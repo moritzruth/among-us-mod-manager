@@ -1,7 +1,7 @@
 import childProcess from "child_process"
 import pathLib from "path"
-import { app, dialog } from "electron"
-import { isDevelopment } from "./isDevelopment"
+import { app } from "electron"
+import { isDevelopment } from "./constants"
 
 const spawn = (command: string, arguments_: string[]) => {
   let spawnedProcess
