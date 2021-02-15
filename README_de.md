@@ -8,7 +8,7 @@
 [**🖼️ Zeig mir Screenshots!**](https://ko-fi.com/album/Among-Us-Mod-Manager-L3L13NKR7)
 
 ## 📦 Installieren oder aktualisieren 
-Lade den neuesten [Installer](https://github.com/moritzruth/among-us-mod-manager/releases/download/v1.0.0/AmongUsModManagerInstaller-1.0.0.exe)
+Lade den neuesten [Installer](https://github.com/moritzruth/among-us-mod-manager/releases/download/v1.1.0/AmongUsModManagerInstaller-1.1.0.exe)
 herunter und führe ihn aus.
 
 Eventuell wird dir die folgende Warnung angezeigt
@@ -25,7 +25,7 @@ Um diese Warnung zu entfernen, müsste ich ein teures Code Signing-Zertifikat ka
 
 ### Für fortgeschrittene Nutzer
 Alternativ kannst du auch die
-[`.zip`-Datei](https://github.com/moritzruth/among-us-mod-manager/releases/download/v1.0.0/AmongUsModManager-1.0.0.zip)
+[`.zip`-Datei](https://github.com/moritzruth/among-us-mod-manager/releases/download/v1.1.0/AmongUsModManager-1.1.0.zip)
 herunterladen, ihren Inhalt in einen Ordner extrahieren und die Datei `Among Us Mod Manager.exe` ausführen.
 
 ## ✔️ Unterstützte Mods
