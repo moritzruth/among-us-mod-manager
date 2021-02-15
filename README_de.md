@@ -5,6 +5,8 @@
 
 *\*auf dem PC, mit der Steam-Version des Spiels.*
 
+[**🖼️ Zeig mir Screenshots!**](https://ko-fi.com/album/Among-Us-Mod-Manager-L3L13NKR7)
+
 ## 📦 Installieren oder aktualisieren 
 Lade den neuesten [Installer](https://github.com/moritzruth/among-us-mod-manager/releases/download/v1.0.0/AmongUsModManagerInstaller-1.0.0.exe)
 herunter und führe ihn aus.
