@@ -3,7 +3,7 @@
 # Among Us Mod Manager
 > Install and update Among Us mods with a single click*
 
-*\*on PC, with the Steam version of the game.*
+*\*on PC. Only the Steam version is tested, but other ones should also work.*
 
 [**🖼️ Show me some screenshots!**](https://ko-fi.com/album/Among-Us-Mod-Manager-L3L13NKR7)
 

@@ -2,7 +2,14 @@ import { app, Menu, shell } from "electron"
 import { registerWindowIPC } from "./registerWindowIPC"
 import { createWindow, getWindow } from "./window"
 import { handleSquirrelEvents } from "./handleSquirrelEvents"
-import { getOriginalGameVersion, initiateManager, loadGameVersionOrShowError, STEAM_APPS_DIRECTORY } from "./manager"
+import {
+  doStartupCheck,
+  getOriginalGameVersion,
+  initiateManager,
+  getDirectoryForInstallations,
+  showOriginalGameDirectorySelectDialog,
+  detectOriginalGameVersion
+} from "./manager"
 import { MANAGER_VERSION } from "./constants"
 
 if (!handleSquirrelEvents()) {
@@ -12,16 +19,23 @@ if (!handleSquirrelEvents()) {
   }
 
   app.on("ready", async () => {
-    await loadGameVersionOrShowError()
+    await doStartupCheck()
+    await detectOriginalGameVersion()
 
     app.applicationMenu = Menu.buildFromTemplate([
       { label: `Manager: ${MANAGER_VERSION}`, enabled: false },
       { label: `Among Us: ${getOriginalGameVersion()}`, enabled: false },
       { type: "separator" },
       {
-        label: "Open Steam games directory",
+        label: "Select the game directory",
         click() {
-          shell.openPath(STEAM_APPS_DIRECTORY)
+          showOriginalGameDirectorySelectDialog("user")
+        }
+      },
+      {
+        label: "Open the installations directory",
+        click() {
+          shell.openPath(getDirectoryForInstallations())
         }
       },
       {

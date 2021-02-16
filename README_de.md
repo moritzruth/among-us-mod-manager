@@ -3,7 +3,7 @@
 # Among Us Mod Manager
 > Installiere und aktualisiere Among Us-Mods mit einem einzigen Klick*
 
-*\*auf dem PC, mit der Steam-Version des Spiels.*
+*\*auf dem PC. Nur die Steam-Version ist getestet, aber andere sollten auch funktionieren.*
 
 [**🖼️ Zeig mir Screenshots!**](https://ko-fi.com/album/Among-Us-Mod-Manager-L3L13NKR7)
 

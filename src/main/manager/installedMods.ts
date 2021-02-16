@@ -6,12 +6,12 @@ import execa from "execa"
 import { app } from "electron"
 import semver from "semver"
 import { getWindow } from "../window"
-import { isDevelopment, MANAGER_VERSION } from "../constants"
+import { MANAGER_VERSION } from "../constants"
 import { detectGameVersion } from "./detectGameVersion"
-import { send, STEAM_APPS_DIRECTORY } from "./util"
+import { send } from "./util"
 import { getRemoteMod, RemoteMod } from "./remoteMods"
 import { updateProgress } from "./progress"
-import { getOriginalGameVersion, ORIGINAL_GAME_DIRECTORY } from "./gameInfo"
+import { getDirectoryForInstallations, getOriginalGameDirectory, getOriginalGameVersion } from "./gameInfo"
 import { sendUIModData } from "./ipc"
 
 interface InstalledMod {
@@ -26,9 +26,9 @@ export const getInstalledMods = () => installedMods
 export const getInstalledMod: (id: string) => InstalledMod = id => installedMods.find(mod => mod.id === id)!
 
 export async function discoverInstalledMods() {
-  const directoryNames = await fs.readdir(STEAM_APPS_DIRECTORY)
+  const directoryNames = await fs.readdir(getDirectoryForInstallations())
   installedMods = (await Promise.all(directoryNames.map<Promise<InstalledMod | null>>(async name => {
-    const directory = pathLib.resolve(STEAM_APPS_DIRECTORY, name)
+    const directory = pathLib.resolve(getDirectoryForInstallations(), name)
     const dataPath = pathLib.resolve(directory, "aumm.json")
 
     if (await fs.pathExists(dataPath)) {
@@ -54,13 +54,13 @@ async function installMod(remoteMod: RemoteMod) {
   const alreadyInstalledIndex = installedMods.findIndex(mod => mod.id === remoteMod.id)
   if (alreadyInstalledIndex !== -1) installedMods.splice(alreadyInstalledIndex, 1)
 
-  const directory = pathLib.resolve(STEAM_APPS_DIRECTORY, `Among Us (${remoteMod.title})`)
+  const directory = pathLib.resolve(getDirectoryForInstallations(), `Among Us (${remoteMod.title})`)
 
   updateProgress({ title: "Install: " + remoteMod.title, text: "Preparing", finished: false })
   if (await fs.pathExists(directory)) await fs.remove(directory)
 
   updateProgress({ text: "Copying game files" })
-  await fs.copy(ORIGINAL_GAME_DIRECTORY, directory)
+  await fs.copy(getOriginalGameDirectory(), directory)
 
   const request = download(remoteMod.downloadURL, directory, { filename: "__archive" })
 
@@ -98,7 +98,7 @@ export async function startMod(id: string) {
 
   const process = execa(
     pathLib.resolve(installedMod.path, "Among Us.exe"),
-    { detached: false, stdout: "ignore", stderr: isDevelopment ? "inherit" : "ignore", windowsHide: false }
+    { detached: false, stdout: "ignore", stderr: "ignore", windowsHide: false }
   )
 
   activeModId = installedMod.id
