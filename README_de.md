@@ -11,15 +11,15 @@
 Lade den neuesten [Installer](https://github.com/moritzruth/among-us-mod-manager/releases/download/v1.1.0/AmongUsModManagerInstaller-1.1.0.exe)
 herunter und führe ihn aus.
 
-Eventuell wird dir die folgende Warnung angezeigt:
+Eventuell wird dir folgende Warnung angezeigt:
 
 > Der Computer wurde durch Windows geschützt: Von Windows Defender Smartscreen wurde der Start einer unbekannten App
 > verhindert.
 
-Du kannst diese Warnung ignorieren, indem du erst auf „Weitere Informationen“ und dann auf
+Du kannst sie ignorieren, indem du erst auf „Weitere Informationen“ und dann auf
 „Trotzdem ausführen“ klickst.
 
-Um diese Warnung zu entfernen, müsste ich ein teures Code Signing-Zertifikat kaufen, welches ich nicht habe.
+Um die Warnung zu entfernen, müsste ich ein teures Code Signing-Zertifikat kaufen, welches ich nicht habe.
 
 **Aktualisiere das Programm nicht, während das Spiel läuft!**
 
