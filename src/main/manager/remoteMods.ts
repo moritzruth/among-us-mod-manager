@@ -1,6 +1,8 @@
 import got from "got"
 import { app, dialog } from "electron"
 
+const MODS_URL = "https://raw.githubusercontent.com/moritzruth/among-us-mod-manager/main/resources/mods.json"
+
 export interface RemoteMod {
   id: string
   title: string
@@ -17,7 +19,7 @@ export const getRemoteMod: (id: string) => RemoteMod = id => remoteMods.find(mod
 
 export async function fetchRemoteMods(): Promise<void> {
   try {
-    remoteMods = (await got("http://m0.is/amongus-mods", { responseType: "json" })).body as RemoteMod[]
+    remoteMods = (await got(MODS_URL, { responseType: "json" })).body as RemoteMod[]
   } catch {
     dialog.showErrorBox("Mods could not be loaded.", "Please check your internet connection.")
     app.exit(1)
