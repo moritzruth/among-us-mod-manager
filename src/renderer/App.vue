@@ -2,6 +2,10 @@
   <div class="flex flex-col overflow-hidden h-screen">
     <TitleBar/>
     <main class="overflow-hidden flex flex-col">
+      <p class="px-3 text-sm py-2">
+        Some mods require a specific version of Among Us and can therefore not be installed. But when they are already
+        installed, you can safely update the original game.
+      </p>
       <ModsList/>
       <div class="teleport-target"/>
     </main>

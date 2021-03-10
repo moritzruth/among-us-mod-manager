@@ -11,6 +11,7 @@ interface UIMod {
   projectURL: string
   installedVersion: string | null
   outdated: boolean
+  notInstallableReason: string | null
 }
 
 const getUIModData: () => UIMod[] = () => getRemoteMods().map(remoteMod => {
@@ -22,9 +23,11 @@ const getUIModData: () => UIMod[] = () => getRemoteMods().map(remoteMod => {
     author: remoteMod.author,
     installedVersion: installedMod?.version ?? null,
     projectURL: remoteMod.projectURL,
-    outdated: installedMod === undefined
-      ? false
-      : installedMod.version !== remoteMod.version || installedMod.amongUsVersion !== getOriginalGameVersion()
+    outdated: installedMod === undefined ? false : installedMod.version !== remoteMod.version,
+    notInstallableReason: (installedMod !== undefined && installedMod.version === remoteMod.version) ||
+    remoteMod.amongUsVersion === getOriginalGameVersion()
+      ? null
+      : `Among Us v${remoteMod.amongUsVersion}s is required for this mod.`
   }
 })
 

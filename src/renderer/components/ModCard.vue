@@ -2,7 +2,7 @@
   <div class="bg-gray-800 ring-offset-gray-700 p-4 flex relative">
     <div class="flex-grow flex flex-col">
       <div>
-        <span class="text-3xl">{{ mod.title }}</span>&nbsp;
+        <span class="text-2xl">{{ mod.title }}</span>&nbsp;
         <span v-if="status === 'up-to-date'" class="text-xl text-green-400 font-mono">v{{ mod.installedVersion }}</span>
         <span v-else-if="status === 'outdated'" class="text-xl text-red-400 font-mono">update required</span>
         <span v-else-if="status === 'not-installed'" class="text-xl text-gray-400 font-mono">not installed</span>
@@ -13,12 +13,12 @@
       </div>
     </div>
     <div class="flex flex-col justify-center items-center space-y-3 pt-2">
-      <div class="flex justify-center items-center">
+      <div ref="actionButton" class="flex justify-center items-center">
         <button
           class="text-2xl rounded-full p-5 transform-gpu bg-opacity-40 ring-offset-gray-700
                  transition duration-200 ring-white ring-offset-4"
           :class="actionButtonClasses"
-          :disabled="status === 'up-to-date' && activeModId !== null"
+          :disabled="actionButtonDisabled"
           @click="onActionClick()"
         >
           <transition name="slide" mode="out-in">
@@ -32,7 +32,7 @@
     <button
       v-if="status !== 'not-installed'"
       class="flex justify-center items-center space-x-1 text-sm p-1
-               transition duration-200 top-1 right-1 absolute"
+             transition duration-200 top-1 right-1 absolute"
       title="Uninstall"
       :disabled="activeModId === mod.id"
       :class="activeModId === mod.id ? 'opacity-50 cursor-not-allowed' : 'hocus:bg-gray-600'"
@@ -67,9 +67,11 @@
 
 <script>
   import { PlayIcon, DownloadIcon, RefreshCwIcon, XIcon } from "@zhuowenli/vue-feather-icons"
-  import { computed, toRef } from "vue"
+  import { computed, toRef, ref, onMounted, watchEffect } from "vue"
+  import tippy from "tippy.js"
   import { useMainStore } from "../pinia"
   import { ipcRenderer } from "../utils/ipcRenderer.ts"
+  import "tippy.js/dist/tippy.css"
 
   export default {
     name: "ModCard",
@@ -82,14 +84,36 @@
     },
     setup(props) {
       const store = useMainStore()
+      const actionButton = ref(null)
       const status = computed(() => {
         if (props.mod.installedVersion === null) return "not-installed"
         if (props.mod.outdated) return "outdated"
         return "up-to-date"
       })
 
+      onMounted(() => {
+        watchEffect(onInvalidate => {
+          if (props.mod.notInstallableReason === null) return
+
+          const instance = tippy(actionButton.value, {
+            content: props.mod.notInstallableReason,
+            placement: "bottom",
+            offset: [0, 20]
+          })
+
+          onInvalidate(() => {
+            instance.destroy()
+          })
+        })
+      })
+
+      const actionButtonDisabled = computed(() => props.mod.notInstallableReason !== null ||
+        (status.value === "up-to-date" && store.activeModId !== null))
+
       return {
         status,
+        actionButton,
+        actionButtonDisabled,
         activeModId: toRef(store, "activeModId"),
         uninstall() {
           ipcRenderer.invoke("manager:uninstall", props.mod.id)
@@ -109,8 +133,8 @@
         settingsDisabled: computed(() => status.value !== "up-to-date" || store.activeModId === props.mod.id),
         actionButtonClasses: computed(() => {
           const classes = []
-          if (status.value !== "up-to-date" || store.activeModId === null)
-            classes.push("hocus:scale-110", "hocus:bg-opacity-100", "hocus:ring-1")
+          if (actionButtonDisabled.value) classes.push("cursor-not-allowed")
+          else classes.push("hocus:scale-110", "hocus:bg-opacity-100", "hocus:ring-1")
 
           switch (status.value) {
             case "up-to-date":

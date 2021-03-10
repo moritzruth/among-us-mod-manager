@@ -19,6 +19,7 @@ module.exports = {
       }
     }],
     "@typescript-eslint/no-unsafe-call": "off", // many false positives
-    "@typescript-eslint/strict-boolean-expressions": "off" // many false positives
+    "@typescript-eslint/strict-boolean-expressions": "off", // many false positives
+    "@typescript-eslint/no-extra-parens": "off"
   }
 }

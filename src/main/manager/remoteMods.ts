@@ -1,7 +1,8 @@
 import got from "got"
 import { app, dialog } from "electron"
 
-const MODS_URL = "https://raw.githubusercontent.com/moritzruth/among-us-mod-manager/main/resources/mods.json"
+const MODS_URL = process.env.MODS_LIST_URL ??
+  "https://raw.githubusercontent.com/moritzruth/among-us-mod-manager/main/resources/mods.json"
 
 export interface RemoteMod {
   id: string
@@ -11,6 +12,7 @@ export interface RemoteMod {
   downloadURL: string
   version: string
   minManagerVersion: string
+  amongUsVersion: string
 }
 
 let remoteMods: RemoteMod[] = []
