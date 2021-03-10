@@ -8,7 +8,7 @@
 [**🖼️ Show me some screenshots!**](https://ko-fi.com/album/Among-Us-Mod-Manager-L3L13NKR7)
 
 ## 📦 Install or update
-Download [the latest installer](https://github.com/moritzruth/among-us-mod-manager/releases/download/v1.2.0/AmongUsModManagerInstaller-1.2.0.exe)
+Download [the latest installer](https://github.com/moritzruth/among-us-mod-manager/releases/download/v1.3.0/AmongUsModManagerInstaller-1.3.0.exe)
 and execute it. It’s as simple as that.
 
 You may encounter the following warning:
@@ -22,13 +22,14 @@ Removing this warning requires buying an expensive Code Signing license which I 
 
 ### For advanced users
 Alternatively, download
-[the `.zip` archive](https://github.com/moritzruth/among-us-mod-manager/releases/download/v1.2.0/AmongUsModManager-1.2.0.zip),
+[the `.zip` archive](https://github.com/moritzruth/among-us-mod-manager/releases/download/v1.3.0/AmongUsModManager-1.3.0.zip),
 extract it to a new directory and execute the file named `Among Us Mod Manager.exe`.
 
 ## ✔️ Supported mods
 - [Extra Roles](https://github.com/NotHunter101/ExtraRolesAmongUs) by NotHunter101
 - [Sheriff](https://github.com/Woodi-dev/Among-Us-Sheriff-Mod) by Woodi-dev
 - [Love Couple](https://github.com/Woodi-dev/Among-Us-Love-Couple-Mod) by Woodi-dev
+- [Town of Us](https://github.com/slushiegoose/Town-Of-Us) by slushiegoose
 
 ## 💡 I found a bug / I have a suggestion
 If you are comfortable using GitHub,
