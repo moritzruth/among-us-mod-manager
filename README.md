@@ -1,9 +1,9 @@
 **English** • [Deutsch](/README_de.md)
 
 # Among Us Mod Manager
-> Install and update Among Us mods with a single click*
+> Install and update **6 Among Us mods** with a single click*
 
-*\*on PC. Only the Steam version is tested, but other ones should also work.*
+*\*on PC. Only the Steam version is tested, but other ones may also work.*
 
 [**🖼️ Show me some screenshots!**](https://ko-fi.com/album/Among-Us-Mod-Manager-L3L13NKR7)
 
@@ -30,6 +30,8 @@ extract it to a new directory and execute the file named `Among Us Mod Manage
 - [Sheriff](https://github.com/Woodi-dev/Among-Us-Sheriff-Mod) by Woodi-dev
 - [Love Couple](https://github.com/Woodi-dev/Among-Us-Love-Couple-Mod) by Woodi-dev
 - [Town of Us](https://github.com/slushiegoose/Town-Of-Us) by slushiegoose
+- [Town of Impostors](https://github.com/AJMix/TownOfImpostors) by AJMix
+- [The Other Roles](https://github.com/Eisbison/TheOtherRoles) by Eisbison
 
 ## 💡 I found a bug / I have a suggestion
 If you are comfortable using GitHub,

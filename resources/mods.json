@@ -1,15 +1,5 @@
 [
   {
-    "id": "extra-roles",
-    "title": "Extra Roles",
-    "author": "NotHunter101",
-    "downloadURL": "https://github.com/NotHunter101/ExtraRolesAmongUs/releases/download/v1.3.1/Role.Mod.v.1.3.1.zip",
-    "version": "1.3.1",
-    "projectURL": "https://github.com/NotHunter101/ExtraRolesAmongUs",
-    "minManagerVersion": "1.0.0",
-    "amongUsVersion": "2020.12.9"
-  },
-  {
     "id": "sheriff",
     "title": "Sheriff",
     "author": "Woodi-dev",
@@ -41,12 +31,32 @@
   },
   {
     "id": "extra-roles-experimental",
-    "title": "Extra Roles AU3.5",
+    "title": "Extra Roles",
     "author": "NotHunter101",
     "downloadURL": "https://github.com/NotHunter101/ExtraRolesAmongUs/releases/download/v1.3.1(3.5s)/Extra.Roles.v.1.3.1-3.5s.zip",
     "version": "1.3.1-AU3.5",
     "projectURL": "https://github.com/NotHunter101/ExtraRolesAmongUs",
     "minManagerVersion": "1.3.0",
     "amongUsVersion": "2021.3.5"
+  },
+  {
+    "id": "town-of-impostors",
+    "title": "Town of Impostors",
+    "author": "AJMix",
+    "downloadURL": "https://github.com/AJMix/TownOfImpostors/releases/download/v1.7.1/TownOfImpostors1.7.1.zip",
+    "version": "1.7.1",
+    "projectURL": "https://github.com/AJMix/TownOfImpostors",
+    "minManagerVersion": "1.3.0",
+    "amongUsVersion": "2021.3.31"
+  },
+  {
+    "id": "the-other-roles",
+    "title": "The Other Roles",
+    "author": "Eisbison",
+    "downloadURL": "https://github.com/Eisbison/TheOtherRoles/releases/download/v2.1.0/TheOtherRoles.zip",
+    "version": "2.1.0",
+    "projectURL": "https://github.com/Eisbison/TheOtherRoles",
+    "minManagerVersion": "1.3.0",
+    "amongUsVersion": "2021.3.31"
   }
 ]
