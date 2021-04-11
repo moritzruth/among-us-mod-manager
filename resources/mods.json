@@ -33,21 +33,21 @@
     "id": "extra-roles-experimental",
     "title": "Extra Roles",
     "author": "NotHunter101",
-    "downloadURL": "https://github.com/NotHunter101/ExtraRolesAmongUs/releases/download/v1.3.1(3.5s)/Extra.Roles.v.1.3.1-3.5s.zip",
+    "downloadURL": "https://github.com/NotHunter101/ExtraRolesAmongUs/releases/download/v1.3.1(3.31.3s)/Extra.Roles.v.1.3.1-3.31.3s.zip",
     "version": "1.3.1-AU3.5",
     "projectURL": "https://github.com/NotHunter101/ExtraRolesAmongUs",
     "minManagerVersion": "1.3.0",
-    "amongUsVersion": "2021.3.5"
+    "amongUsVersion": "2021.3.31"
   },
   {
     "id": "sheriff",
     "title": "Sheriff",
     "author": "Woodi-dev",
-    "downloadURL": "https://github.com/Woodi-dev/Among-Us-Sheriff-Mod/releases/download/v1.21_2021.3.5s/Among.Us.Sheriff.Mod.v1.21.zip",
-    "version": "1.21",
+    "downloadURL": "https://github.com/Woodi-dev/Among-Us-Sheriff-Mod/releases/download/v1.22_2021.3.31.3s/Among.Us.Sheriff.Mod.v1.22.v2021.3.31.3s.zip",
+    "version": "1.22",
     "projectURL": "https://github.com/Woodi-dev/Among-Us-Sheriff-Mod",
     "minManagerVersion": "1.3.0",
-    "amongUsVersion": "2021.3.5"
+    "amongUsVersion": "2021.3.31"
   },
   {
     "id": "love-couple",
