@@ -23,8 +23,8 @@
     "id": "the-other-roles",
     "title": "The Other Roles",
     "author": "Eisbison",
-    "downloadURL": "https://github.com/Eisbison/TheOtherRoles/releases/download/v2.6.4/TheOtherRoles.zip",
-    "version": "2.6.4",
+    "downloadURL": "https://github.com/Eisbison/TheOtherRoles/releases/download/v2.6.6/TheOtherRoles.zip",
+    "version": "2.6.6",
     "projectURL": "https://github.com/Eisbison/TheOtherRoles",
     "minManagerVersion": "1.3.0",
     "amongUsVersion": "2021.5.10"
@@ -53,10 +53,10 @@
     "id": "love-couple",
     "title": "Love Couple",
     "author": "Woodi-dev",
-    "downloadURL": "https://github.com/Woodi-dev/Among-Us-Love-Couple-Mod/releases/download/v1.3_2021.4.12s/Among.Us.Love.Couple.Mod.v1.3.v2021.4.12s.zip",
+    "downloadURL": "https://github.com/Woodi-dev/Among-Us-Love-Couple-Mod/releases/download/v1.3_2021.5.10s/Among.Us.Love.Couple.Mod.v1.3.v2021.5.10s.zip",
     "version": "1.3",
     "projectURL": "https://github.com/Woodi-dev/Among-Us-Love-Couple-Mod",
     "minManagerVersion": "1.3.0",
-    "amongUsVersion": "2021.4.12"
+    "amongUsVersion": "2021.5.10"
   }
 ]
