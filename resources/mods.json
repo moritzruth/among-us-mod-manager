@@ -3,60 +3,60 @@
     "id": "town-of-us",
     "title": "Town Of Us",
     "author": "slushiegoose",
-    "downloadURL": "https://github.com/slushiegoose/Town-Of-Us/releases/download/v1.0.3/TownOfUs-v1.0.3.zip",
-    "version": "1.0.3",
+    "downloadURL": "https://github.com/slushiegoose/Town-Of-Us/releases/download/v2.0.4/TownOfUs-v2.0.4.zip",
+    "version": "2.0.4",
     "projectURL": "https://github.com/slushiegoose/Town-Of-Us",
     "minManagerVersion": "1.3.0",
-    "amongUsVersion": "2020.12.9"
+    "amongUsVersion": "2021.5.10"
   },
   {
     "id": "town-of-impostors",
     "title": "Town of Impostors",
     "author": "AJMix",
-    "downloadURL": "https://github.com/AJMix/TownOfImpostors/releases/download/v1.7.1/TownOfImpostors1.7.1.zip",
-    "version": "1.7.1",
-    "projectURL": "https://github.com/AJMix/TownOfImpostors",
+    "downloadURL": "https://github.com/Town-of-Impostors/TownOfImpostors/releases/download/v2.0.6/TownOfImpostors2.0.6.zip",
+    "version": "2.0.6",
+    "projectURL": "https://github.com/Town-of-Impostors/TownOfImpostors",
     "minManagerVersion": "1.3.0",
-    "amongUsVersion": "2021.3.31"
+    "amongUsVersion": "2021.5.10"
   },
   {
     "id": "the-other-roles",
     "title": "The Other Roles",
     "author": "Eisbison",
-    "downloadURL": "https://github.com/Eisbison/TheOtherRoles/releases/download/v2.1.0/TheOtherRoles.zip",
-    "version": "2.1.0",
+    "downloadURL": "https://github.com/Eisbison/TheOtherRoles/releases/download/v2.6.6/TheOtherRoles.zip",
+    "version": "2.6.6",
     "projectURL": "https://github.com/Eisbison/TheOtherRoles",
     "minManagerVersion": "1.3.0",
-    "amongUsVersion": "2021.3.31"
+    "amongUsVersion": "2021.5.10"
   },
   {
     "id": "extra-roles-experimental",
     "title": "Extra Roles",
     "author": "NotHunter101",
-    "downloadURL": "https://github.com/NotHunter101/ExtraRolesAmongUs/releases/download/v1.3.1(3.5s)/Extra.Roles.v.1.3.1-3.5s.zip",
+    "downloadURL": "https://github.com/NotHunter101/ExtraRolesAmongUs/releases/download/v1.3.1(3.31.3s)/Extra.Roles.v.1.3.1-3.31.3s.zip",
     "version": "1.3.1-AU3.5",
     "projectURL": "https://github.com/NotHunter101/ExtraRolesAmongUs",
     "minManagerVersion": "1.3.0",
-    "amongUsVersion": "2021.3.5"
+    "amongUsVersion": "2021.3.31"
   },
   {
     "id": "sheriff",
     "title": "Sheriff",
     "author": "Woodi-dev",
-    "downloadURL": "https://github.com/Woodi-dev/Among-Us-Sheriff-Mod/releases/download/v1.21_2021.3.5s/Among.Us.Sheriff.Mod.v1.21.zip",
-    "version": "1.21",
+    "downloadURL": "https://github.com/Woodi-dev/Among-Us-Sheriff-Mod/releases/download/v1.23_2021.5.10s/Among.Us.Sheriff.Mod.v1.23.v2021.5.10s.zip",
+    "version": "1.23",
     "projectURL": "https://github.com/Woodi-dev/Among-Us-Sheriff-Mod",
     "minManagerVersion": "1.3.0",
-    "amongUsVersion": "2021.3.5"
+    "amongUsVersion": "2021.5.10"
   },
   {
     "id": "love-couple",
     "title": "Love Couple",
     "author": "Woodi-dev",
-    "downloadURL": "https://github.com/Woodi-dev/Among-Us-Love-Couple-Mod/releases/download/v1.2_2021.3.5s/Among.Us.Love.Couple.Mod.v1.2.v2021.3.5s.zip",
-    "version": "1.2",
+    "downloadURL": "https://github.com/Woodi-dev/Among-Us-Love-Couple-Mod/releases/download/v1.3_2021.5.10s/Among.Us.Love.Couple.Mod.v1.3.v2021.5.10s.zip",
+    "version": "1.3",
     "projectURL": "https://github.com/Woodi-dev/Among-Us-Love-Couple-Mod",
     "minManagerVersion": "1.3.0",
-    "amongUsVersion": "2021.3.5"
+    "amongUsVersion": "2021.5.10"
   }
 ]
