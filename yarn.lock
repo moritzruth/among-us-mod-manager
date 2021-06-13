@@ -2241,27 +2241,27 @@ escape-string-regexp@^4.0.0:
   resolved "https://registry.yarnpkg.com/escape-string-regexp/-/escape-string-regexp-4.0.0.tgz#14ba83a5d373e3d311e5afca29cf5bfad965bf34"
   integrity sha512-TtpcNJ3XAzx3Gq8sWRzJaVajRs0uVxA2YAkdb1jm2YkPz4G6egUFAyA3n5vtEIZefPk5Wa4UXbKuS5fKkJWdgA==
 
-eslint-config-awzzm-ts@^1.5.2:
-  version "1.5.2"
-  resolved "https://registry.yarnpkg.com/eslint-config-awzzm-ts/-/eslint-config-awzzm-ts-1.5.2.tgz#40bd033f84e15c9cd23e8466224b7d6eadd12265"
-  integrity sha512-7WBmGMJjPEqK8UV3j3pz0wnCNPzCYRRxt00UKCnWRnZ3alSLWt2kMf6SN1nx0KkcjZA9DH7gjxlMFlO53vtPqg==
+eslint-config-awzzm-ts@^1.6.0:
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/eslint-config-awzzm-ts/-/eslint-config-awzzm-ts-1.6.0.tgz#0958a32b1dadedca3e4b48369fafd9fcbdf39136"
+  integrity sha512-mLq4HgrsKFgV7LjgI1bGP7iZzdHL7PL3eRjeMOxyxmm8CbPfdYXND4k905aXUA+CLao+J53XF8mh0q7xXbtG3g==
   dependencies:
     "@typescript-eslint/eslint-plugin" "^4.15.0"
     "@typescript-eslint/parser" "^4.15.0"
-    eslint-config-awzzm "^1.5.0"
+    eslint-config-awzzm "^1.6.0"
 
-eslint-config-awzzm-vue@^1.5.0:
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/eslint-config-awzzm-vue/-/eslint-config-awzzm-vue-1.5.0.tgz#93abc96333de86f3c56b7e9597285d19c5e6ceff"
-  integrity sha512-nZ0s8if0F5trl/e9twPBs+1HJBeXLGjzVgEFsPCpSxdOaVqvLX5/wFHJA5qMXC23fh8oQwqcsMZnMDHAKdOi3A==
+eslint-config-awzzm-vue@^1.6.0:
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/eslint-config-awzzm-vue/-/eslint-config-awzzm-vue-1.6.0.tgz#0d936c96df3fcf74f9009ceeb559fad76f9ae555"
+  integrity sha512-qqYoCJrAYhn6SeUqAO5RNNpYo2P3oHJVkkt8PgW1tlruXGNm9zpd+TYVWYeD+vyQfGocAAT1e0RfICHz+FAa6w==
   dependencies:
-    eslint-config-awzzm "^1.5.0"
+    eslint-config-awzzm "^1.6.0"
     eslint-plugin-vue "^7.5.0"
 
-eslint-config-awzzm@^1.5.0:
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/eslint-config-awzzm/-/eslint-config-awzzm-1.5.0.tgz#af9fe495629c6ec62515c0db73138f68d18f12b4"
-  integrity sha512-ETzMzLGKdrRYX9uwtxl6cBkD42hhGAbkDeFWZBtlHD69BCrxHTC4eidriYgGlEitLvgYNvIj3KuTViEqnxIavw==
+eslint-config-awzzm@^1.6.0:
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/eslint-config-awzzm/-/eslint-config-awzzm-1.6.0.tgz#3fb204abec56c545ce7b6f651c65894cc23b97eb"
+  integrity sha512-+rcPbPrm98Oc91IQHxqgw4k1voLn7Z8E/Q/sbfhA8vcSeh9AUGKr5QrUSFEQ6K5H6CftfLbx/tPzkBuk92DkBA==
   dependencies:
     eslint-plugin-import "^2.22.1"
     eslint-plugin-unicorn "^28.0.0"

@@ -5,8 +5,7 @@
   "rules": {
     "unicorn/prevent-abbreviations": ["warn", {
       "replacements": {
-        "mod": false,
-        "props": false
+        "mod": false
       }
     }]
   }

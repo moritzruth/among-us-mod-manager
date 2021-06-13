@@ -6,7 +6,7 @@
     @close="close()"
   >
     <template #default>
-      <KInput label="Custom Server Address" v-model="data.customServerAddress"/>
+      <KInput v-model="data.customServerAddress" label="Custom Server Address"/>
     </template>
     <template #buttons>
       <KButton :loading="loading" @click="save()">
@@ -23,10 +23,10 @@
 <script>
   import { ref, watchEffect, computed, reactive } from "vue"
   import { useMainStore } from "../pinia"
+  import { ipcRenderer } from "../utils/ipcRenderer.ts"
   import ModalDialog from "./ModalDialog.vue"
   import KInput from "./KInput.vue"
   import KButton from "./KButton.vue"
-  import { ipcRenderer } from "../utils/ipcRenderer.ts"
 
   export default {
     name: "ModSettingsDialog",

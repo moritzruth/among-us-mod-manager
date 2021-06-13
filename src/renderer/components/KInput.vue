@@ -92,8 +92,8 @@
       required: Boolean
     },
     emits: ["update:modelValue"],
-    setup(props) {
-      const { type } = toRefs(props)
+    setup(properties) {
+      const { type } = toRefs(properties)
       const showPassword = ref(false)
       const inputElement = ref(null)
       const passwordButtonElement = ref(null)
@@ -137,7 +137,7 @@
         inputClasses: computed(() => {
           const classes = []
           if (type.value === "password") classes.push("pr-14")
-          if (props.disabled) classes.push("cursor-not-allowed")
+          if (properties.disabled) classes.push("cursor-not-allowed")
           return classes
         }),
         focus() {

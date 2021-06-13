@@ -82,21 +82,21 @@
         required: true
       }
     },
-    setup(props) {
+    setup(properties) {
       const store = useMainStore()
       const actionButton = ref(null)
       const status = computed(() => {
-        if (props.mod.installedVersion === null) return "not-installed"
-        if (props.mod.outdated) return "outdated"
+        if (properties.mod.installedVersion === null) return "not-installed"
+        if (properties.mod.outdated) return "outdated"
         return "up-to-date"
       })
 
       onMounted(() => {
         watchEffect(onInvalidate => {
-          if (props.mod.notInstallableReason === null) return
+          if (properties.mod.notInstallableReason === null) return
 
           const instance = tippy(actionButton.value, {
-            content: props.mod.notInstallableReason,
+            content: properties.mod.notInstallableReason,
             placement: "bottom",
             offset: [0, 20]
           })
@@ -107,7 +107,7 @@
         })
       })
 
-      const actionButtonDisabled = computed(() => props.mod.notInstallableReason !== null ||
+      const actionButtonDisabled = computed(() => properties.mod.notInstallableReason !== null ||
         (status.value === "up-to-date" && store.activeModId !== null))
 
       return {
@@ -116,21 +116,21 @@
         actionButtonDisabled,
         activeModId: toRef(store, "activeModId"),
         uninstall() {
-          ipcRenderer.invoke("manager:uninstall", props.mod.id)
+          ipcRenderer.invoke("manager:uninstall", properties.mod.id)
         },
         async onActionClick() {
           switch (status.value) {
             case "up-to-date":
-              await ipcRenderer.invoke("manager:start", props.mod.id)
+              await ipcRenderer.invoke("manager:start", properties.mod.id)
               break
 
             case "outdated":
             case "not-installed":
-              const updateRequired = !await ipcRenderer.invoke("manager:install", props.mod.id)
+              const updateRequired = !await ipcRenderer.invoke("manager:install", properties.mod.id)
               if (updateRequired) store.showUpdateRequired = true
           }
         },
-        settingsDisabled: computed(() => status.value !== "up-to-date" || store.activeModId === props.mod.id),
+        settingsDisabled: computed(() => status.value !== "up-to-date" || store.activeModId === properties.mod.id),
         actionButtonClasses: computed(() => {
           const classes = []
           if (actionButtonDisabled.value) classes.push("cursor-not-allowed")
@@ -144,7 +144,7 @@
                 classes.push("cursor-default")
 
                 // it does something weird which is definitely not spinning but looks pretty cool
-                if (store.activeModId === props.mod.id)
+                if (store.activeModId === properties.mod.id)
                   classes.push("cursor-default", "scale-110", "bg-opacity-100", "animate-spin")
               }
 

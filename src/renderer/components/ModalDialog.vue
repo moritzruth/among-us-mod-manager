@@ -126,8 +126,8 @@
       modelValue: Boolean
     },
     emits: ["update:modelValue", "close"],
-    setup(props, { emit }) {
-      const { modelValue: active } = toRefs(props)
+    setup(properties, { emit }) {
+      const { modelValue: active } = toRefs(properties)
       const dialogElement = ref(null)
       const dialogContentAndButtonsElement = ref(null)
 
@@ -137,7 +137,7 @@
       }
 
       const close = () => {
-        if (props.closable) forceClose()
+        if (properties.closable) forceClose()
       }
 
       const stackItem = { close }
