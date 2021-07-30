@@ -29,9 +29,6 @@ Alternativ kannst du auch die
 herunterladen, ihren Inhalt in einen Ordner extrahieren und die Datei `Among Us Mod Manager.exe` ausführen.
 
 ## ✔️ Unterstützte Mods
-- [Extra Roles](https://github.com/NotHunter101/ExtraRolesAmongUs) von NotHunter101
-- [Sheriff](https://github.com/Woodi-dev/Among-Us-Sheriff-Mod) von Woodi-dev
-- [Love Couple](https://github.com/Woodi-dev/Among-Us-Love-Couple-Mod) von Woodi-dev
 - [Town of Us](https://github.com/slushiegoose/Town-Of-Us) von slushiegoose
 - [Town of Impostors](https://github.com/AJMix/TownOfImpostors) von AJMix
 - [The Other Roles](https://github.com/Eisbison/TheOtherRoles) von Eisbison
