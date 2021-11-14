@@ -1,7 +1,7 @@
 **English** • [Deutsch](/README_de.md)
 
 # Among Us Mod Manager
-> Install and update **6 Among Us mods** with a single click*
+> Install and update **3 Among Us mods** with a single click*
 
 *\*on PC. Only the Steam version is tested, but other ones may also work.*
 
