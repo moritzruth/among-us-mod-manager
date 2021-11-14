@@ -1,7 +1,7 @@
 [English](/README.md) • **Deutsch**
 
 # Among Us Mod Manager
-> Installiere und aktualisiere **6 Among Us-Mods** mit einem einzigen Klick*
+> Installiere und aktualisiere **3 Among Us-Mods** mit einem einzigen Klick*
 
 *\*auf dem PC. Nur die Steam-Version ist getestet, aber andere PC-Versionen könnten eventuell auch funktionieren.*
 
