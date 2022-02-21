@@ -1,5 +1,13 @@
 **English** • [Deutsch](/README_de.md)
 
+<b>
+
+```diff
+- It seems like noone is using this anymore, so I‘m archiving it.
+```
+
+</b>
+
 # Among Us Mod Manager
 > Install and update **3 Among Us mods** with a single click*
 
